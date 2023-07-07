@@ -1,6 +1,6 @@
 # config.py
 
-host = '192.168.0.198'
-user = 'Gabriel'
-password = 'gabely1234'
+host = '111.111.0.1'
+user = 'root'
+password = 'xxx'
 database = 'AnaVisClin'
