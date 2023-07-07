@@ -13,22 +13,30 @@ def trans():
         con_db_sor = ConexionMySQL(hosts, users, passwords, databases)
         ses_db_sor = con_db_sor.conectar()
 
-        # # Consulta para extraer los datos
-        # consulta = "SELECT * FROM ext_codigocie10"
-
-        # # Utilizar el objeto de conexión de SQLAlchemy con pd.read_sql()
-        # datos = pd.read_sql(consulta, ses_db_stg)
-        # print(datos.head())
-
         sql_ext_category = "SELECT idPaciente, tipoIdendificacion, numeroIdentificacion, nombre, apellido, ciudad, direccion, fechaNacimiento, alergia, sexo, grupoSanguineo FROM ext_paciente"
         df_ext_category = pd.read_sql(sql_ext_category, ses_db_stg)
         
-        sql_sentence = "MERGE INTO public.dim_categoria AS car_ca USING (SELECT category_id, nombre FROM public.temporal_category) AS ext_ca ON car_ca.cat_bus_id = ext_ca.category_id WHEN MATCHED THEN UPDATE SET nombre = ext_ca.nombre WHEN NOT MATCHED THEN INSERT (cat_bus_id, nombre) VALUES (ext_ca.category_id, ext_ca.nombre)"
+        sql_sentence = """
+            INSERT INTO dim_paciente (idPaciente, tipoIdendificacion, numeroIdentificacion, nombre, apellido, ciudad, direccion, fechaNacimiento, alergia, sexo, grupoSanguineo)
+            SELECT ext_pa.idPaciente, ext_pa.tipoIdendificacion, ext_pa.numeroIdentificacion, ext_pa.nombre, ext_pa.apellido, ext_pa.ciudad, ext_pa.direccion, ext_pa.fechaNacimiento, ext_pa.alergia, ext_pa.sexo, ext_pa.grupoSanguineo
+            FROM temporal AS ext_pa
+            ON DUPLICATE KEY UPDATE
+            tipoIdendificacion = ext_pa.tipoIdendificacion,
+            numeroIdentificacion = ext_pa.numeroIdentificacion,
+            nombre = ext_pa.nombre,
+            apellido = ext_pa.apellido,
+            ciudad = ext_pa.ciudad,
+            direccion = ext_pa.direccion,
+            fechaNacimiento = ext_pa.fechaNacimiento,
+            alergia = ext_pa.alergia,
+            sexo = ext_pa.sexo,
+            grupoSanguineo = ext_pa.grupoSanguineo;
+        """
 
         with ses_db_sor.begin() as conn:
             df_ext_category.to_sql('temporal', con=ses_db_sor, if_exists='replace', index=False)
-            conn.execute(sql_sentence)
-            conn.execute("DROP TABLE temporal")
+            conn.exec_driver_sql(sql_sentence)
+            conn.exec_driver_sql("DROP TABLE temporal")
 
     except:
         print("Error")
