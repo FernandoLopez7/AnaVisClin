@@ -4,7 +4,7 @@ from Parametros.configstg import host, user, password, database
 
 def persistir(datos, tabla):
     try:
-        # Crear una instancia de la clase ConexionMySQL
+        # Crear una instancia de la clase ConexionMySQL 
         conexion_destino = ConexionMySQL(host, user, password, database)
         # Llamar al método conectar para establecer la conexión
         connection = conexion_destino.conectar()

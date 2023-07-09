@@ -10,7 +10,7 @@ class ConexionMySQL:
 
     def conectar(self):
         try:
-            # Crear la cadena de conexión utilizando SQLAlchemy
+            # Crear la cadena de conexión utilizando SQLAlchemy 
             db_uri = f"mysql://{self.user}:{self.password}@{self.host}/{self.database}"
             self.engine = create_engine(db_uri)
             print("Conexión exitosa a la base de datos MySQL")

@@ -20,7 +20,7 @@ from transformacion.tranformacion1 import trans
 #           'recepcionista'
 #         ]
 
-# # tables = ['codigocie10']
+# # tables = ['codigocie10'] test
 
 # for table in tables:
 #     n = extraer(table)

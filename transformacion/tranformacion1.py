@@ -5,7 +5,7 @@ from Parametros.configsor import hosts, users, passwords, databases
 from Parametros.merge import sql_sentence, temporal
 def trans():
     try:
-        # Conexión a la base de datos de origen (stg)
+        # Conexión a la base de datos de origen (stg) 
         con_db_stg = ConexionMySQL(host, user, password, database)
         ses_db_stg = con_db_stg.conectar()
         

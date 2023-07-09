@@ -6,7 +6,7 @@ def extraer(table):
     try:
         # Crear una instancia de la clase ConexionMySQL
         conexion_origen = ConexionMySQL(host, user, password, database)
-        # Llamar al método conectar para establecer la conexión
+        # Llamar al método conectar para establecer la conexión 
         engine = conexion_origen.conectar()
 
         # Consulta para extraer los datos

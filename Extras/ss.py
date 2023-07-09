@@ -7,7 +7,7 @@ def obtener_tablas():
         password = 'gabely1234'
         database = 'AnaVisClin'
 
-        # Establecer la conexión a la base de datos
+        # Establecer la conexión a la base de datos 
         connection = MySQLdb.connect(
             host=host,
             user=user,
