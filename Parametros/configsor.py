@@ -2,5 +2,5 @@
 
 hosts = '127.0.0.1'
 users = 'root'
-passwords = 'xxx'
+passwords = 'gabely1234'
 databases = 'sor_anavisclin'
